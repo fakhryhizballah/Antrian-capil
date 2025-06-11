@@ -12,7 +12,7 @@
   <div class="flex items-center justify-between p-4 border-b">
     <div class="flex items-center space-x-4">
       <img src="/asset/img/logo-RSUD.jpg" alt="Logo RSUD" class="w-16 h-16" />
-      <h1 class="text-4xl font-bold">RUMAH SAKIT UMUM DAERAH dr. ABDUL AZIZ SINGKAWANG</h1>
+      <h1 class="text-4xl font-bold">DUKCAPIL Kota Singkawang</h1>
     </div>
     <div class="text-right text-lg">
       <p id="tanggal">Jum'at, 11 April 2025</p>
@@ -100,63 +100,11 @@
   }
   
 </style>
+<script src="/asset/js/media.js"></script>
+<script src="/asset/js/panggil.js"></script>
 <script>
-   async function updateRunningText() {
-     await fetch('/edit/message')
-       .then(response => response.json())
-       .then(data => {
-        const runningTextContainer = document.getElementById('runningTextContainer');
-        runningTextContainer.innerHTML = ''; // Clear previous content
-        if (data.message.length <= 100) {
-        for (let i = 0; i < 4; i++) {
-            const runningText = document.createElement('div');
-            runningText.className = 'marquee-loop inline-block text-white text-sm font-medium px-4';
-            runningText.innerHTML = data.message;
-            runningTextContainer.appendChild(runningText);
-        }
-        } else if (data.message.length > 100) {
-         for (let i = 0; i < 3; i++) {
-            const runningText = document.createElement('div');
-            runningText.className = 'marquee-loop inline-block text-white text-sm font-medium px-4';
-            runningText.innerHTML = data.message;
-            runningTextContainer.appendChild(runningText);
-        }
-        } else {
-          console.error('No message found in response');
-        }
-       })
-       .catch(error => console.error('Error fetching running text:', error));
-   }
-   updateRunningText();
-
-   async function updateVideo() {
-        let currentIndex = 0;
-            let playlist = [];
-            await fetch('/edit/video')
-                  .then(response => response.json())
-                  .then(data => {
-                    for (let url  of data) {
-                      playlist.push("/asset/content/"+url.url);
-                    }
-                  })
-                .catch(error => console.error('Error fetching video:', error));
-        let videoPlayer = document.getElementById("videos");
-              console.log(videoPlayer);
-              console.log(playlist);
-              console.log(playlist.length);
-
-            videoPlayer.addEventListener("ended", () => {
-            console.log("Video ended, switching to next video.");
-            currentIndex = (currentIndex + 1) % playlist.length; // Loop kembali ke awal
-            videoPlayer.src = playlist[currentIndex];
-            videoPlayer.play();
-          });
   
-}
-updateVideo();
- 
-</script>
-<script>
+  // playAudiosSequentially(['/asset/audio/suara/nomorantrian.wav','/asset/audio/suara/puluh.wav'])
     const socket = io();
     socket.on('receive_message', (data) => {
     console.log(data);
@@ -179,7 +127,6 @@ updateVideo();
     });
     // Prioritas
     socket.on('loket_prioritas', (msg, nomor_antri) => {
-
                 document.getElementById(msg).innerHTML = `<span style='color: red;'>${nomor_antri} P</span> `;
             });
     socket.on("connect", () => {
@@ -189,26 +136,12 @@ updateVideo();
     });
     socket.on('pangil', (no, loket) => {
         console.log("pangil : " + no + " Loket : " + loket);
-        number(no);
-        console.log("Nomor antrian : " + no);
-      
-        if(no>100){
-            setTimeout(() => {
-            console.log("loket : " + loket);
-            new Audio('/asset/audio/suara/loket.wav').play();
-        }, 5200);
-            setTimeout(() => {
-            angka(loket)
-        }, 5100);
-        } else{
-            setTimeout(() => {
-            new Audio('/asset/audio/suara/loket.wav').play();
-        }, 3700);
-            setTimeout(() => {
-            console.log("loket : " + loket);
-            angka(loket)
-        }, 3900);}
-     
+        let nomorantrian = ['/asset/audio/suara/nomorantrian.wav']
+        nomorantrian.push(...playNumberAudio(no));
+        nomorantrian.push('/asset/audio/suara/loket.wav');
+        nomorantrian.push(...playNumberAudio(loket));
+        playAudiosSequentially(nomorantrian);
+
     });
             socket.on('totalsisa', (msg) => {
         document.getElementById("sisa").innerHTML = msg;
@@ -216,30 +149,11 @@ updateVideo();
 
     socket.on('panggil_prioritas', (no, loket) => {
         console.log("pangil : " + no + " Loket : " + loket);
-        new Audio('/asset/audio/suara/Prioritas.mp4').play();
-        setTimeout(() => {
-               angka(no);
-        }, 2800);
-   
-    
-        console.log("Nomor antrian : " + no);
-      
-        if(no>100){
-            setTimeout(() => {
-            console.log("loket : " + loket);
-            new Audio('/asset/audio/suara/loket.wav').play();
-        }, 8200);
-            setTimeout(() => {
-            angka(loket)
-        }, 8100);
-        } else{
-            setTimeout(() => {
-            new Audio('/asset/audio/suara/loket.wav').play();
-        }, 6700);
-            setTimeout(() => {
-            console.log("loket : " + loket);
-            angka(loket)
-        }, 6900);}
+        let nomorantrian = ['/asset/audio/suara/Prioritas.mp4']
+        nomorantrian.push(...playNumberAudio(no));
+        nomorantrian.push('/asset/audio/suara/loket.wav');
+        nomorantrian.push(...playNumberAudio(loket));
+        playAudiosSequentially(nomorantrian);
     });
 
 

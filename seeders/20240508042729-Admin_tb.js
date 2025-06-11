@@ -15,28 +15,28 @@ module.exports = {
     return queryInterface.bulkInsert("Admin_tbs", [
       {
         user: "loket1",
-        password: "rsaa",
+        password: "password",
         privilege: "1",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         user: "loket2",
-        password: "rsaa",
+        password: "password",
         privilege: "2",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         user: "loket3",
-        password: "rsaa",
+        password: "password",
         privilege: "3",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         user: "loket4",
-        password: "rsaa",
+        password: "password",
         privilege: "4",
         createdAt: new Date(),
         updatedAt: new Date(),
