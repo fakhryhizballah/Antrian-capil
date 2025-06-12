@@ -44,6 +44,12 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        kode: "A 1",
+        level: "Loket 4",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
         kode: "ANT",
         level: "Cetak Antrian",
         createdAt: new Date(),

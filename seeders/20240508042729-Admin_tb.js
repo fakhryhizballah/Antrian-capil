@@ -42,6 +42,13 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        user: "loket5",
+        password: "password",
+        privilege: "A 1",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
         user: "rsaa",
         password: "rsaa",
         privilege: "ANT",

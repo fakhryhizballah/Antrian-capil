@@ -11,7 +11,7 @@
  <!-- Header -->
   <div class="flex items-center justify-between p-4 border-b">
     <div class="flex items-center space-x-4">
-      <img src="/asset/img/logo-RSUD.jpg" alt="Logo RSUD" class="w-16 h-16" />
+      <img src="/asset/img/Lambang_KotaSingkawang.png" alt="Logo RSUD" class="w-16 h-16" />
       <h1 class="text-4xl font-bold">DUKCAPIL Kota Singkawang</h1>
     </div>
     <div class="text-right text-lg">
@@ -149,7 +149,7 @@
 
     socket.on('panggil_prioritas', (no, loket) => {
         console.log("pangil : " + no + " Loket : " + loket);
-        let nomorantrian = ['/asset/audio/suara/Prioritas.mp4']
+        let nomorantrian = ['/asset/audio/suara/antianSmart.mp3']
         nomorantrian.push(...playNumberAudio(no));
         nomorantrian.push('/asset/audio/suara/loket.wav');
         nomorantrian.push(...playNumberAudio(loket));
