@@ -49,8 +49,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        user: "rsaa",
-        password: "rsaa",
+        user: "capil",
+        password: "capil",
         privilege: "ANT",
         createdAt: new Date(),
         updatedAt: new Date(),
