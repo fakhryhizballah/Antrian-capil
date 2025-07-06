@@ -26,28 +26,28 @@ async function updateRunningText() {
 }
 updateRunningText();
 
-async function updateVideo() {
-    let currentIndex = 0;
-    let playlist = [];
-    await fetch('/edit/video')
-        .then(response => response.json())
-        .then(data => {
-            for (let url of data) {
-                playlist.push("/asset/content/" + url.url);
-            }
-        })
-        .catch(error => console.error('Error fetching video:', error));
-    let videoPlayer = document.getElementById("videos");
-    console.log(videoPlayer);
-    console.log(playlist);
-    console.log(playlist.length);
+// async function updateVideo() {
+//     let currentIndex = 0;
+//     let playlist = [];
+//     await fetch('/edit/video')
+//         .then(response => response.json())
+//         .then(data => {
+//             for (let url of data) {
+//                 playlist.push("/asset/content/" + url.url);
+//             }
+//         })
+//         .catch(error => console.error('Error fetching video:', error));
+//     let videoPlayer = document.getElementById("videos");
+//     console.log(videoPlayer);
+//     console.log(playlist);
+//     console.log(playlist.length);
 
-    videoPlayer.addEventListener("ended", () => {
-        console.log("Video ended, switching to next video.");
-        currentIndex = (currentIndex + 1) % playlist.length; // Loop kembali ke awal
-        videoPlayer.src = playlist[currentIndex];
-        videoPlayer.play();
-    });
+//     videoPlayer.addEventListener("ended", () => {
+//         console.log("Video ended, switching to next video.");
+//         currentIndex = (currentIndex + 1) % playlist.length; // Loop kembali ke awal
+//         videoPlayer.src = playlist[currentIndex];
+//         videoPlayer.play();
+//     });
 
-}
-updateVideo();
+// }
+// updateVideo();

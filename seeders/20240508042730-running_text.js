@@ -12,7 +12,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    return queryInterface.bulkInsert("running_texts", [
+    return queryInterface.bulkInsert("Running_texts", [
       {
         id: 1,
         message: "Selamat Datang..",
@@ -30,6 +30,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    return queryInterface.bulkDelete("running_texts", null, {});
+    return queryInterface.bulkDelete("Running_texts", null, {});
   }
 };

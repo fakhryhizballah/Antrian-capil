@@ -31,13 +31,13 @@
     <!-- Loket 1 -->
     <div class="bg-white border shadow rounded-lg p-4 text-center">
       <h2 class="text-teal-700 font-bold text-4xl mb-2">Loket 1</h2>
-      <p class="text-red-600 text-9xl font-extrabold" id="1">x</p>
+      <p class="text-black text-9xl font-extrabold" id="1">x</p>
     </div>
 
     <!-- Sisa Antrian -->
     <div class="bg-white border shadow rounded-lg p-4 text-center">
       <h2 class="text-teal-700 font-bold text-4xl mb-2">Sisa Antrian</h2>
-      <p class="text-black text-9xl font-extrabold" id="sisa">x</p>
+      <p class="text-green-500 text-9xl font-extrabold" id="sisa">x</p>
     </div>
 
     <!-- Loket 3 -->
@@ -52,21 +52,11 @@
       <p class="text-black text-9xl font-extrabold" id="2">x</p>
     </div>
 
-    <!-- Gambar (opsional) -->
-    <div class="bg-gray-100 border shadow rounded-lg flex items-center justify-center p-4">
-         <div class="rounded-lg overflow-hidden shadow-lg">
-    <video
-      id="videos"
-      controls
-      autoplay
-      muted
-      playsinline
-    >
-      <source src="/asset/audio/pendaftaran.mp4" type="video/mp4" />
-      Maaf, browser Anda tidak mendukung pemutar video.
-    </video>
+  <!-- Loket 1 -->
+  <div class="bg-white border shadow rounded-lg p-4 text-center">
+    <h2 class="text-teal-700 font-bold text-4xl mb-2">Loket Perekaman</h2>
+    <p class="text-black text-9xl font-extrabold" id="A 1">x</p>
   </div>
-    </div>
 
     <!-- Loket 4 -->
     <div class="bg-white border shadow rounded-lg p-4 text-center">
@@ -79,6 +69,17 @@
   <div class="relative whitespace-nowrap" id="runningTextContainer">
   </div>
 </div>
+<button id="playSound">x</button>
+<audio id="myAudio" src="/asset/audio/suara/A.wav"></audio>
+
+<script>
+  document.getElementById('playSound').addEventListener('click', function () {
+    const audio = document.getElementById('myAudio');
+    audio.play().catch((e) => {
+      console.error('Gagal memutar audio:', e);
+    });
+  });
+</script>
 
     <!-- <div class="video-section">
         <iframe src="https://www.youtube.com/embed/example" frameborder="0" allowfullscreen></iframe>
@@ -112,10 +113,10 @@
       console.log("Update Running Text");
          updateRunningText();
     }
-    if (data.command === 'UpdateVideo') {
-      console.log("Update Video");
-         updateVideo();
-    }
+    // if (data.command === 'UpdateVideo') {
+    //   console.log("Update Video");
+    //      updateVideo();
+    // }
     });
     socket.on('loket', (msg, nomor_antri) => {
       try {
@@ -143,13 +144,23 @@
         playAudiosSequentially(nomorantrian);
 
     });
-            socket.on('totalsisa', (msg) => {
+    socket.on('pangil2', (no, loket) => {
+        console.log("pangil : " + no + " Loket : " + loket);
+        let nomorantrian = ['/asset/audio/suara/nomorantrian.wav']
+        nomorantrian.push(...playNumberAudio(no));
+        nomorantrian.push('/asset/audio/suara/LOKET_PEREKAMAN.wav');
+        nomorantrian.push(...playNumberAudio(loket));
+        playAudiosSequentially(nomorantrian);
+
+    });
+    
+        socket.on('totalsisa', (msg) => {
         document.getElementById("sisa").innerHTML = msg;
     });
 
     socket.on('panggil_prioritas', (no, loket) => {
         console.log("pangil : " + no + " Loket : " + loket);
-        let nomorantrian = ['/asset/audio/suara/antianSmart.mp3']
+        let nomorantrian = ['/asset/audio/suara/Antrian_SMART.wav']
         nomorantrian.push(...playNumberAudio(no));
         nomorantrian.push('/asset/audio/suara/loket.wav');
         nomorantrian.push(...playNumberAudio(loket));

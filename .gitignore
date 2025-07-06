@@ -6,3 +6,4 @@ package-lock.json
 resume.json
 /public/cache/*
 !/public/cache/.gitkeep
+.env.production

@@ -224,7 +224,7 @@ io.on('connection', async (socket) => {
                 updatedAt: null
             }
         });
-        await cetakAntrian(nomor_antri + " P");
+        await cetakAntrian(nomor_antri + " SMART");
         totalSisa();
         io.emit('sisa_prioritas', sisaAntrian);
         io.emit('btnCetak', false);
@@ -258,7 +258,7 @@ io.on('connection', async (socket) => {
                 updatedAt: null
             }
         });
-        await cetakAntrian(nomor_antri + " A");
+        await cetakAntrian(nomor_antri + " PEREKAMAN");
         totalSisa();
         io.emit('sisa_atas', sisaAntrian);
         io.emit('btnCetak', false);

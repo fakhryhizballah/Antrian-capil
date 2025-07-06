@@ -1,5 +1,7 @@
 'use strict';
 
+const { id } = require('date-fns/locale');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -14,46 +16,53 @@ module.exports = {
     */
     return queryInterface.bulkInsert("Level_tbs", [
       {
+        id: 1,
         kode: "1",
         level: "Loket 1",
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       },
       {
+        id: 2,
         kode: "2",
         level: "Loket 2",
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       },
       {
+        id: 3,
         kode: "3",
         level: "Loket 3",
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       },
       {
+        id: 4,
         kode: "4",
         level: "Loket 4",
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       },
       {
+        id: 5,
         kode: "5",
         level: "Loket Prioritas",
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       },
       {
+        id: 6,
         kode: "A 1",
         level: "Loket 4",
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       },
       {
+        id: 7,
         kode: "ANT",
         level: "Cetak Antrian",
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       },
     ]);
 
