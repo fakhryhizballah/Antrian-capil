@@ -104,11 +104,9 @@
 
         document.getElementById(msg).innerHTML = nomor_antri;
     });
-    // Prioritas
-    socket.on('loket_prioritas', (msg, nomor_antri) => {
-
+    socket.on('loket_SMART', (msg, nomor_antri) => {
                 document.getElementById(msg).innerHTML = `<span style='color: red;'>${nomor_antri} P</span> `;
-            });
+    });
     socket.on("connect", () => {
         console.log(socket.connected); // true
         console.log(socket.id); // "G5p5..."
@@ -141,9 +139,9 @@
         document.getElementById("sisa").innerHTML = msg;
     });
 
-    socket.on('panggil_prioritas', (no, loket) => {
+    socket.on('panggil_SMART', (no, loket) => {
         console.log("pangil : " + no + " Loket : " + loket);
-        new Audio('/asset/audio/suara/Prioritas.mp4').play();
+        new Audio('/asset/audio/suara/SMART.mp4').play();
         setTimeout(() => {
                angka(no);
         }, 2800);

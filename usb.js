@@ -5,8 +5,11 @@ escpos.USB = require('escpos-usb');
 escpos.Network = require('escpos-network');
 
 
-const cetakAntrian = function (nomor_antri) {
+const cetakAntrian = function (nomor_antri, keterangan) {
     let date = new Date();
+    if (keterangan == null) {
+        keterangan = "";
+    }
     let date_now = date.getDate() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear();
     let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
     try {
@@ -29,35 +32,36 @@ const cetakAntrian = function (nomor_antri) {
         const printer = new escpos.Printer(device, options);
         device.open(function () {
             printer
-                .size(1, 1)
-                .font('a')
                 .align('ct')
+                .font('b')           // font kecil, cocok untuk 58mm
                 .style('B')
+                .size(1, 1)
                 .text('DUKCAPIL')
                 .text('Kota Singkawang')
-                .text('------------------')
+                .text('------------------------')
+
                 .style('NORMAL')
                 .text('Nomor Antrian')
-                .size(5, 4)
-                .text('')
-                .text(nomor_antri)
-                .text('')
+                .size(3, 2)          // ukuran sedang agar muat
+                .text(nomor_antri)  // misal: A007
                 .size(1, 1)
-                .text('------------------')
+                .text(keterangan)   // misal: Layanan KTP
+
+                .text('------------------------')
                 .font('b')
-                .size(0.5, 0.5)
-                .text('Tanggal Antrian : ')
-                .text(date_now)
-                .text(time)
+                .size(1, 1)
+                .text(`Tgl : ${date_now}`)  // misal: 20-07-2025
+                .text(`Jam : ${time}`)      // misal: 09:13
+
                 .text('')
-                .size(0.01, 0.01)
-                .text('*Mengambil kembali Antrian, Jika Terlewat*')
+                .text('* Harap Tunggu Panggilan *')
+                .text('* Ambil Ulang Jika Terlewat *')
                 .text('')
-                .text('*Semoga Sehat Selalu*')
-                .text(' ')
-                .newLine()
+                .text('   ~ Semoga Sehat Selalu ~')
+                .text('')
+
                 .cut()
-                .close()
+                .close();
         });
 
     } catch (error) {

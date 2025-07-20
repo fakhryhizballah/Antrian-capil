@@ -5,7 +5,7 @@ socket.on("connect", () => {
     socket.emit("UpdateLoket", "");
 });
 socket.on('loket', (msg, nomor_antri) => {
-    document.getElementById(msg).innerHTML = nomor_antri + " A";
+    document.getElementById(msg).innerHTML = nomor_antri + " Perekaman";
 });
 socket.on('nomor_antri_atas', (msg) => {
 
@@ -37,18 +37,18 @@ socket.on('pangil', (no, loket) => {
         btnNext.disabled = false;
     }
 });
-socket.on('panggil_prioritas', (no, loket) => {
+socket.on('panggil_SMART', (no, loket) => {
     if (loket == level) {
-        btnUlangPrioritas.disabled = false;
-        btnNextPrioritas.disabled = false;
+        btnUlangSMART.disabled = false;
+        btnNextSMART.disabled = false;
     }
 });
 
 socket.on('antiranHabis', (msg, loket) => {
     if (loket == level) {
         alert(msg);
-        btnUlangPrioritas.disabled = false;
-        btnNextPrioritas.disabled = false;
+        btnUlangSMART.disabled = false;
+        btnNextSMART.disabled = false;
         btnUlang.disabled = false;
         btnNext.disabled = false;
     }

@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Antrian_loket_prioritas', {
+    await queryInterface.createTable('Antrian_loket_smarts', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -24,12 +24,12 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
-    await queryInterface.addIndex('Antrian_loket_prioritas', ['nomor_antri', 'createdAt'], {
+    await queryInterface.addIndex('Antrian_loket_smarts', ['nomor_antri', 'createdAt'], {
       unique: true,
       name: 'unique_nomor_antri_createdAt' // Nama indeks unik
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Antrian_loket_prioritas');
+    await queryInterface.dropTable('Antrian_loket_smarts');
   }
 };

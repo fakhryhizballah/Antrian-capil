@@ -5,7 +5,11 @@ socket.on("connect", () => {
     socket.emit("UpdateLoket", "");
 });
 socket.on('loket', (msg, nomor_antri) => {
-    document.getElementById(msg).innerHTML = nomor_antri;
+    console.log(msg + " " + nomor_antri);
+    try {
+        document.getElementById(msg).innerHTML = nomor_antri;
+    } catch (error) {
+    }
 });
 socket.on('nomor_antri', (msg) => {
 
@@ -37,52 +41,52 @@ socket.on('pangil', (no, loket) => {
         btnNext.disabled = false;
     }
 });
-socket.on('panggil_prioritas', (no, loket) => {
+socket.on('panggil_SMART', (no, loket) => {
     if (loket == level) {
-        btnUlangPrioritas.disabled = false;
-        btnNextPrioritas.disabled = false;
+        btnUlangSMART.disabled = false;
+        btnNextSMART.disabled = false;
     }
 });
 
 socket.on('antiranHabis', (msg, loket) => {
     if (loket == level) {
         alert(msg);
-        btnUlangPrioritas.disabled = false;
-        btnNextPrioritas.disabled = false;
+        btnUlangSMART.disabled = false;
+        btnNextSMART.disabled = false;
         btnUlang.disabled = false;
         btnNext.disabled = false;
     }
 });
 
-// Prioritas
-socket.on('loket_prioritas', (msg, nomor_antri) => {
-    document.getElementById(msg).innerHTML = `<span style='color: red;'>${nomor_antri} P</span> `;
+// SMART
+socket.on('loket_SMART', (msg, nomor_antri) => {
+    document.getElementById(msg).innerHTML = `<span style='color: red;'>${nomor_antri} SMART</span> `;
 });
-socket.on('nomor_antri_prioritas', (msg) => {
+socket.on('nomor_antri_SMART', (msg) => {
     console.log("Nomor antri yang tercetak : " + msg);
-    document.getElementById("totalPrioritas").innerHTML = msg;
+    document.getElementById("totalSMART").innerHTML = msg;
 });
-socket.on('sisa_prioritas', (msg) => {
-    console.log('sisa prioritas: ' + msg);
-    document.getElementById("sisaPrioritas").innerHTML = msg;
+socket.on('sisa_SMART', (msg) => {
+    console.log('sisa SMART: ' + msg);
+    document.getElementById("sisaSMART").innerHTML = msg;
 });
-let btnNextPrioritas = document.getElementById('nextPrioritas');
-let btnUlangPrioritas = document.getElementById('ulangPrioritas');
+let btnNextSMART = document.getElementById('nextSMART');
+let btnUlangSMART = document.getElementById('ulangSMART');
 
-function nextPrioritas(id) {
-    console.log('next Prioritas Loket ' + id);
-    btnUlangPrioritas.disabled = true;
-    btnNextPrioritas.disabled = true;
-    socket.emit("next_antrian_prioritas", id);
+function nextSMART(id) {
+    console.log('next SMART Loket ' + id);
+    btnUlangSMART.disabled = true;
+    btnNextSMART.disabled = true;
+    socket.emit("next_antrian_SMART", id);
     // let nomor = document.getElementById(id).innerHTML;
     // let suara = [Math.floor(nomor) + 1, id];
     // console.log(suara);
     // socket.emit("suara", suara);
 }
-function ulangPangilanPrioritas(id) {
-    btnUlangPrioritas.disabled = true;
-    btnNextPrioritas.disabled = true;
-    socket.emit("suara_prioritas", id);
+function ulangPangilanSMART(id) {
+    btnUlangSMART.disabled = true;
+    btnNextSMART.disabled = true;
+    socket.emit("suara_SMART", id);
 }
 function resetLoket() {
     socket.emit("reset_loket");

@@ -5,76 +5,173 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Queue Display</title>
     <link href="/asset/css/main.css" rel="stylesheet">
+    <style>
+      @keyframes pulse-glow {
+          0%, 100% { 
+              transform: scale(1);
+              box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+          }
+          50% { 
+              transform: scale(1.02);
+              box-shadow: 0 0 50px rgba(239, 68, 68, 0.8);
+          }
+      }
+      
+      .pulse-current {
+          animation: pulse-glow 2s infinite;
+      }
+      
+      @keyframes slide-in {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+      }
+      
+      .slide-in {
+          animation: slide-in 0.5s ease-out;
+      }
+      
+      .tv-display {
+          width: 100vw;
+          height: 100vh;
+          overflow: hidden;
+      }
+      
+      .queue-number {
+          font-size: 12rem;
+          line-height: 1;
+      }
+      
+      @media (min-width: 1920px) {
+          .queue-number {
+              font-size: 16rem;
+          }
+      }
+      
+      .recording-number {
+          font-size: 10rem;
+          line-height: 1;
+      }
+      
+      @media (min-width: 1920px) {
+          .recording-number {
+              font-size: 14rem;
+          }
+      }
+  </style>
 </head>
 <body class="bg-white font-sans">
 
  <!-- Header -->
-  <div class="flex items-center justify-between p-4 border-b">
-    <div class="flex items-center space-x-4">
-      <img src="/asset/img/Lambang_KotaSingkawang.png" alt="Logo RSUD" class="w-16 h-16" />
-      <h1 class="text-4xl font-bold">DUKCAPIL Kota Singkawang</h1>
-    </div>
-    <div class="text-right text-lg">
-      <p id="tanggal">Jum'at, 11 April 2025</p>
-      <p id="waktu">9:47</p>
-    </div>
-  </div>
-
-  <!-- Judul Antrian -->
-  <div class="bg-teal-600 text-white text-center py-2 font-bold text-3xl">
-    ANTRIAN DIPANGGIL
-  </div>
-
-  <!-- Grid Antrian -->
-  <div class="grid grid-cols-3 gap-4 p-4">
-    
-    <!-- Loket 1 -->
-    <div class="bg-white border shadow rounded-lg p-4 text-center">
-      <h2 class="text-teal-700 font-bold text-4xl mb-2">Loket 1</h2>
-      <p class="text-black text-9xl font-extrabold" id="1">x</p>
-    </div>
-
-    <!-- Sisa Antrian -->
-    <div class="bg-white border shadow rounded-lg p-4 text-center">
-      <h2 class="text-teal-700 font-bold text-4xl mb-2">Sisa Antrian</h2>
-      <p class="text-green-500 text-9xl font-extrabold" id="sisa">x</p>
-    </div>
-
-    <!-- Loket 3 -->
-    <div class="bg-white border shadow rounded-lg p-4 text-center">
-      <h2 class="text-teal-700 font-bold text-4xl mb-2">Loket 3</h2>
-      <p class="text-black text-9xl font-extrabold"id="3">x</p>
-    </div>
-
-    <!-- Loket 2 -->
-    <div class="bg-white border shadow rounded-lg p-4 text-center">
-      <h2 class="text-teal-700 font-bold text-4xl mb-2">Loket 2</h2>
-      <p class="text-black text-9xl font-extrabold" id="2">x</p>
-    </div>
-
-  <!-- Loket 1 -->
-  <div class="bg-white border shadow rounded-lg p-4 text-center">
-    <h2 class="text-teal-700 font-bold text-4xl mb-2">Loket Perekaman</h2>
-    <p class="text-black text-9xl font-extrabold" id="A 1">x</p>
-  </div>
-
-    <!-- Loket 4 -->
-    <div class="bg-white border shadow rounded-lg p-4 text-center">
-      <h2 class="text-teal-700 font-bold text-4xl mb-2">Loket 4</h2>
-      <p class="text-black text-9xl font-extrabold" id="4">x</p>
-    </div>
-  </div>
-  <!-- Running Text -->
-<div class="fixed bottom-0 w-full bg-blue-600 py-2 overflow-hidden z-50">
-  <div class="relative whitespace-nowrap" id="runningTextContainer">
+ <div class="bg-white fixed top-0 w-full rounded-b-3xl shadow-2xl px-12 py-6">
+  <div class="flex justify-between items-center">
+      <div class="flex items-center space-x-6">
+          <div class="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center">
+              <span class="text-white text-3xl font-bold">🏛️</span>
+          </div>
+          <h1 class="text-4xl font-bold text-gray-800">DUKCAPIL Kota Singkawang | Antrian Dipanggil</h1>
+      </div>
+      <div class="text-right text-gray-600">
+          <div id="currentDate" class="text-2xl font-semibold"></div>
+          <div id="currentTime" class="text-xl"></div>
+      </div>
   </div>
 </div>
-<button id="playSound">x</button>
-<audio id="myAudio" src="/asset/audio/suara/A.wav"></audio>
+
+<!-- Main Title -->
+<div class="mx-8 mt-8 bg-emerald-500 rounded-3xl shadow-2xl">
+  <h2 class="text-white text-6xl font-bold text-center py-8 uppercase tracking-wider">
+      == ANTRIAN DIPANGGIL ==
+  </h2>
+</div>
+
+<!-- Content Grid -->
+<div class="mx-8 mt-8 grid grid-cols-12 gap-8 h-[calc(100vh-280px)]">
+  <!-- Queue Section (8 columns) -->
+  <div class="col-span-8 grid grid-cols-3 gap-6">
+      <!-- Loket 1 -->
+      <div class="bg-white rounded-3xl shadow-2xl p-8 flex flex-col items-center justify-center hover:shadow-3xl transition-all duration-300 slide-in">
+          <h3 class="text-3xl font-bold text-emerald-600 mb-6 uppercase tracking-wide">Loket 1</h3>
+          <div class="queue-number font-black text-gray-800 mb-4" id="loket1">x</div>
+          <p class="text-2xl text-gray-600 font-medium" id="status1"></p>
+      </div>
+
+      <!-- Loket 2 -->
+      <div class="bg-white rounded-3xl shadow-2xl p-8 flex flex-col items-center justify-center hover:shadow-3xl transition-all duration-300 slide-in">
+          <h3 class="text-3xl font-bold text-emerald-600 mb-6 uppercase tracking-wide">Loket 2</h3>
+          <div class="queue-number font-black text-gray-800 mb-4" id="loket2">x</div>
+          <p class="text-2xl text-gray-600 font-medium" id="status2"></p>
+      </div>
+
+      <!-- Loket 3 - Current -->
+      <div class="bg-white rounded-3xl shadow-2xl p-8 flex flex-col items-center justify-center hover:shadow-3xl transition-all duration-300 slide-in">
+        <h3 class="text-3xl font-bold text-emerald-600 mb-6 uppercase tracking-wide">Loket 3</h3>
+        <div class="queue-number font-black text-gray-800 mb-4" id="loket3">x</div>
+        <p class="text-2xl text-gray-600 font-medium" id="status3"></p>
+      </div>
+
+      <!-- Loket 4 -->
+      <div class="bg-white rounded-3xl shadow-2xl p-8 flex flex-col items-center justify-center hover:shadow-3xl transition-all duration-300 slide-in">
+          <h3 class="text-3xl font-bold text-emerald-600 mb-6 uppercase tracking-wide">Loket 4</h3>
+          <div class="queue-number font-black text-gray-800 mb-4" id="loket4">x</div>
+          <p class="text-2xl text-gray-600 font-medium" id="status4"></p>
+      </div>
+
+      <!-- Loket 5 -->
+      <div class="bg-white rounded-3xl shadow-2xl p-8 flex flex-col items-center justify-center hover:shadow-3xl transition-all duration-300 slide-in">
+          <h3 class="text-3xl font-bold text-emerald-600 mb-6 uppercase tracking-wide">Loket 5</h3>
+          <div class="queue-number font-black text-gray-800 mb-4" id="loket5">x</div>
+          <p class="text-2xl text-gray-600 font-medium" id="status5"></p>
+      </div>
+
+      <!-- Loket Perekaman -->
+      <div class="bg-gradient-to-br from-teal-500 to-teal-600 rounded-3xl shadow-2xl p-8 flex flex-col items-center justify-center slide-in">
+          <h3 class="text-3xl font-bold text-white mb-6 uppercase tracking-wide">Loket Perekaman</h3>
+          <div class="recording-number font-black text-white mb-4" id="loketA 1">x</div>
+          <p class="text-2xl text-gray-600 font-medium" id="statusA 1"></p>
+      </div>
+  </div>
+
+  <!-- Video & Info Section (4 columns) -->
+  <div class="col-span-4 flex flex-col gap-6">
+      <!-- Video Display -->
+      <div class="bg-white rounded-3xl shadow-2xl p-8 flex-1 flex flex-col">
+          <h3 class="text-3xl font-bold text-gray-800 text-center mb-6 uppercase tracking-wide">
+              Informasi Video
+          </h3>
+          <div class="flex-1 bg-gray-100 rounded-2xl border-4 border-dashed border-gray-300 flex items-center justify-center">
+              <div class="text-center text-gray-500">
+                  <div id="videoContainer" class="w-full h-full flex items-center justify-center">
+                      <!-- Video will be dynamically inserted here -->
+                      <video id="videos" class="w-full h-full object-cover rounded-2xl" autoplay muted loop>
+                          <source src="#" type="video/mp4">
+                          Your browser does not support the video tag.
+                      </video>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Waiting Info -->
+      <div class="bg-gradient-to-br from-orange-400 to-orange-500 rounded-3xl shadow-2xl p-8 text-center">
+          <h3 class="text-2xl font-bold text-white mb-4 uppercase tracking-wide">Sisa Antrian</h3>
+          <div class="text-8xl font-black text-white mb-2" id="Waiting">x</div>
+          <p class="text-xl text-white font-medium">Orang Menunggu</p>
+      </div>
+  </div>
+</div>
+
+  <!-- Running Text -->
+  <div class="fixed bottom-0 w-full bg-blue-600 py-2 overflow-hidden z-50">
+    <div class="relative whitespace-nowrap" id="runningTextContainer">
+    </div>
+  </div>
+<audio id="myAudio" src="/asset/audio/suara/A.wav" autoplay>x</audio>
+  
 
 <script>
-  document.getElementById('playSound').addEventListener('click', function () {
+  document.getElementById('runningTextContainer').addEventListener('click', function () {
     const audio = document.getElementById('myAudio');
+    audio.volume = 0.1;
     audio.play().catch((e) => {
       console.error('Gagal memutar audio:', e);
     });
@@ -113,23 +210,31 @@
       console.log("Update Running Text");
          updateRunningText();
     }
-    // if (data.command === 'UpdateVideo') {
-    //   console.log("Update Video");
-    //      updateVideo();
-    // }
+    if (data.command === 'UpdateVideo') {
+      console.log("Update Video");
+         updateVideo();
+    }
     });
     socket.on('loket', (msg, nomor_antri) => {
       try {
-        document.getElementById(msg).innerHTML = nomor_antri;
+        // console.log(msg + " " + nomor_antri);
+        document.getElementById('loket' + msg).innerHTML = nomor_antri;
+        document.getElementById('status' + msg).innerHTML = "Sedang Dilayani";
       } catch (error) {
                   
       }
        
     });
-    // Prioritas
-    socket.on('loket_prioritas', (msg, nomor_antri) => {
-                document.getElementById(msg).innerHTML = `<span style='color: red;'>${nomor_antri} P</span> `;
-            });
+    // SMART
+    socket.on('loket_SMART', (msg, nomor_antri) => {
+       console.log(msg + " " + nomor_antri);
+       try {
+           document.getElementById('loket' + msg).innerHTML = nomor_antri;
+           document.getElementById('status' + msg).innerHTML = "SMART";
+        } catch (error) {
+                  
+        }
+    });
     socket.on("connect", () => {
         console.log(socket.connected); // true
         console.log(socket.id); // "G5p5..."
@@ -137,53 +242,83 @@
     });
     socket.on('pangil', (no, loket) => {
         console.log("pangil : " + no + " Loket : " + loket);
+        let lokets = document.querySelectorAll('.pulse-glow');
+        console.log(lokets);
+        lokets.forEach(loket => {
+            loket.classList.remove('pulse-glow', 'animate-pulse');
+        });   
+        document.getElementById('status' + loket).innerHTML = "Sedang Dilayani";    
+        document.getElementById('loket' + loket).classList.add('pulse-glow', 'animate-pulse');
         let nomorantrian = ['/asset/audio/suara/nomorantrian.wav']
         nomorantrian.push(...playNumberAudio(no));
         nomorantrian.push('/asset/audio/suara/loket.wav');
         nomorantrian.push(...playNumberAudio(loket));
         playAudiosSequentially(nomorantrian);
-
+    });
+    socket.on('panggil_SMART', (no, loket) => {
+        console.log("panggil_smart : " + no + " Loket : " + loket);
+        let lokets = document.querySelectorAll('.pulse-glow');
+        console.log(lokets);
+        lokets.forEach(loket => {
+            loket.classList.remove('pulse-glow', 'animate-pulse');
+        });        
+        document.getElementById('loket' + loket).classList.add('pulse-glow', 'animate-pulse');
+        document.getElementById('status' + loket).innerHTML = "SMART";
+        let nomorantrian = ['/asset/audio/suara/Antrian_SMART2.wav']
+        nomorantrian.push(...playNumberAudio(no));
+        nomorantrian.push('/asset/audio/suara/loket.wav');
+        nomorantrian.push(...playNumberAudio(loket));
+        playAudiosSequentially(nomorantrian);
     });
     socket.on('pangil2', (no, loket) => {
-        console.log("pangil : " + no + " Loket : " + loket);
+        console.log("pangil2 : " + no + " Loket : " + loket);
+        let lokets = document.querySelectorAll('.pulse-glow');
+        console.log(lokets);
+        lokets.forEach(loket => {
+            loket.classList.remove('pulse-glow', 'animate-pulse');
+        });        
+        document.getElementById('loket' + loket).classList.add('pulse-glow', 'animate-pulse');
+        document.getElementById('status' + loket).innerHTML = "Sedang Dilayani";  
         let nomorantrian = ['/asset/audio/suara/nomorantrian.wav']
         nomorantrian.push(...playNumberAudio(no));
-        nomorantrian.push('/asset/audio/suara/LOKET_PEREKAMAN.wav');
+        nomorantrian.push('/asset/audio/suara/LOKET_PEREKAMAN2.wav');
         nomorantrian.push(...playNumberAudio(loket));
         playAudiosSequentially(nomorantrian);
 
     });
     
-        socket.on('totalsisa', (msg) => {
-        document.getElementById("sisa").innerHTML = msg;
+    socket.on('totalsisa', (msg) => {
+           // Update waiting count
+           const waitingCount = document.getElementById('Waiting');
+           console.log(msg);
+            if (waitingCount) {
+                const currentCount = parseInt(msg);
+                waitingCount.textContent = currentCount;
+            }
     });
-
-    socket.on('panggil_prioritas', (no, loket) => {
-        console.log("pangil : " + no + " Loket : " + loket);
-        let nomorantrian = ['/asset/audio/suara/Antrian_SMART.wav']
-        nomorantrian.push(...playNumberAudio(no));
-        nomorantrian.push('/asset/audio/suara/loket.wav');
-        nomorantrian.push(...playNumberAudio(loket));
-        playAudiosSequentially(nomorantrian);
-    });
-
-
 </script>
 <script>
-    setInterval(() => {
-        var attBul = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"]
-        var attHar = ["-", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", "Minggu"]
-        var date = new Date()
-        var detik = date.getSeconds()
-        var menit = date.getMinutes()
-        var jam = date.getHours()
-        var hari = date.getDay()
-        var tanggal = date.getDate()
-        var bulan = date.getMonth()
-        var tahun = date.getFullYear()
-        document.getElementById('waktu').innerHTML =jam+":"+menit+":"+detik
-        document.getElementById('tanggal').innerHTML = attHar[hari]+" ,"+tanggal+" "+attBul[bulan]+" "+tahun
-    }, 1000);
+   function updateDateTime() {
+            const now = new Date();
+            const dateOptions = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const timeOptions = { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            };
+            
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('id-ID', dateOptions);
+            document.getElementById('currentTime').textContent = now.toLocaleTimeString('id-ID', timeOptions);
+        }
+
+        // Update time every second
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
 </script>
 </body>
 </html>

@@ -44,6 +44,13 @@ module.exports = {
       {
         user: "loket5",
         password: "password",
+        privilege: "5",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        user: "perekaman",
+        password: "password",
         privilege: "A 1",
         createdAt: new Date(),
         updatedAt: new Date(),

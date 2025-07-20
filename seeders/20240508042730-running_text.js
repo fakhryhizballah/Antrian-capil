@@ -15,7 +15,7 @@ module.exports = {
     return queryInterface.bulkInsert("Running_texts", [
       {
         id: 1,
-        message: "Selamat Datang..",
+        message: "🏛️ Dinas Kependudukan dan Pencatatan Sipil Kota Singkawang | Melayani dengan Sepenuh Hati",
         createdAt: new Date(),
         updatedAt: new Date(),
       }

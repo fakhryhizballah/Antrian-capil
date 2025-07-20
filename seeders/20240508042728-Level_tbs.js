@@ -46,14 +46,14 @@ module.exports = {
       {
         id: 5,
         kode: "5",
-        level: "Loket Prioritas",
+        level: "Loket 5",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         id: 6,
         kode: "A 1",
-        level: "Loket 4",
+        level: "Loket Perekaman",
         createdAt: new Date(),
         updatedAt: new Date()
       },

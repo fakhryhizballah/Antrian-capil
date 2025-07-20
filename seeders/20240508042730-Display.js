@@ -48,6 +48,13 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        loket: "A 1",
+        nomor: 0,
+        status: "",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
 
     ]);
 
