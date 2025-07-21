@@ -258,7 +258,7 @@ io.on('connection', async (socket) => {
                 updatedAt: null
             }
         });
-        await cetakAntrian(nomor_antri + " PEREKAMAN");
+        await cetakAntrian(nomor_antri, "PEREKAMAN");
         totalSisa();
         io.emit('sisa_atas', sisaAntrian);
         io.emit('btnCetak', false);
