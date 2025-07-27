@@ -264,7 +264,7 @@
         });        
         document.getElementById('loket' + loket).classList.add('pulse-glow', 'animate-pulse');
         document.getElementById('status' + loket).innerHTML = "SMART";
-        let nomorantrian = ['/asset/audio/suara/Antrian_SMART2.wav']
+        let nomorantrian = ['/asset/audio/suara/antrian_smart.mp3']
         nomorantrian.push(...playNumberAudio(no));
         nomorantrian.push('/asset/audio/suara/loket.wav');
         nomorantrian.push(...playNumberAudio(loket));
@@ -281,7 +281,7 @@
         document.getElementById('status' + loket).innerHTML = "Sedang Dilayani";  
         let nomorantrian = ['/asset/audio/suara/nomorantrian.wav']
         nomorantrian.push(...playNumberAudio(no));
-        nomorantrian.push('/asset/audio/suara/LOKET_PEREKAMAN2.wav');
+        nomorantrian.push('/asset/audio/suara/loket_perekaman.mp3');
         nomorantrian.push(...playNumberAudio(loket));
         playAudiosSequentially(nomorantrian);
 
