@@ -7,14 +7,14 @@ async function updateRunningText() {
             if (data.message.length <= 100) {
                 for (let i = 0; i < 3; i++) {
                     const runningText = document.createElement('div');
-                    runningText.className = 'marquee-loop inline-block text-3xl text-white font-medium px-4';
+                    runningText.className = 'marquee-loop inline-block text-5xl text-white font-medium px-4';
                     runningText.innerHTML = data.message;
                     runningTextContainer.appendChild(runningText);
                 }
             } else if (data.message.length > 100) {
                 for (let i = 0; i < 2; i++) {
                     const runningText = document.createElement('div');
-                    runningText.className = 'marquee-loop inline-block text-white text-3xl font-medium px-4';
+                    runningText.className = 'marquee-loop inline-block text-white text-5xl font-medium px-4';
                     runningText.innerHTML = data.message;
                     runningTextContainer.appendChild(runningText);
                 }
